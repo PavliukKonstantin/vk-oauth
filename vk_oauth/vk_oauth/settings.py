@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'social_django',
+
     'app.apps.AppConfig'
 ]
 
@@ -39,7 +41,7 @@ ROOT_URLCONF = 'vk_oauth.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -47,6 +49,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -70,6 +74,10 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.vk.VKOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -98,6 +106,30 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
+
+LOGIN_URL = '/app/login/'
+
+LOGIN_REDIRECT_URL = '/app/vk-friends/'
+
+LOGOUT_REDIRECT_URL = '/app/'
+
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+
+# For social-auth-app-django with postgre
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = int(
+    os.environ.get("SOCIAL_AUTH_POSTGRES_JSONFIELD", default=0),
+)
+
+SOCIAL_AUTH_VK_OAUTH2_SCOPE = [
+    'friends',
+]
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get(
+    "SOCIAL_AUTH_VK_OAUTH2_KEY",
+)
+SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get(
+    "SOCIAL_AUTH_VK_OAUTH2_SECRET",
+)
