@@ -2,7 +2,6 @@
 # BUILDER IMAGE #
 #################
 
-
 FROM python:3.8.4-alpine as BUILDER
 
 # Install dependecies
@@ -26,9 +25,6 @@ RUN addgroup -S app && adduser -S app -G app
 
 # Change workdir
 WORKDIR /home/app/web
-
-# Create folders
-# RUN mkdir ./staticfiles/
 
 # Install dependecies
 COPY --from=builder /install /usr/local

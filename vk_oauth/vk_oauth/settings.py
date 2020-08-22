@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", default='very-secret-key')
 
-DEBUG = int(os.environ.get("DEBUG", default=1))
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
 HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS")
 ALLOWED_HOSTS = HOSTS.split(" ") if HOSTS else ['*']
@@ -62,15 +62,18 @@ WSGI_APPLICATION = 'vk_oauth.wsgi.application'
 # Database
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "ENGINE": os.environ.get(
+            "POSTGRES_ENGINE",
+            "django.db.backends.sqlite3",
+        ),
         "NAME": os.environ.get(
-            "SQL_DATABASE",
+            "POSTGRES_DB",
             os.path.join(BASE_DIR, "db.sqlite3"),
         ),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "USER": os.environ.get("POSTGRES_USER", "user"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "password"),
+        "HOST": os.environ.get("POSTGRES_HOST", "localhost"),
+        "PORT": os.environ.get("POSTGRES_PORT", "5432"),
     }
 }
 
@@ -117,8 +120,9 @@ LOGOUT_REDIRECT_URL = '/app/'
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 
-# For social-auth-app-django with postgre
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# For social-auth-app-django with postgre
 SOCIAL_AUTH_POSTGRES_JSONFIELD = int(
     os.environ.get("SOCIAL_AUTH_POSTGRES_JSONFIELD", default=0),
 )
