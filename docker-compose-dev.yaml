@@ -6,6 +6,8 @@ services:
             context: ./vk_oauth
             dockerfile: Dockerfile
         command: gunicorn vk_oauth.wsgi:application --bind 0.0.0.0:8000
+        volumes:
+            - ./vk_oauth/:/home/app/web/
         expose:
             - 8000
         env_file:
