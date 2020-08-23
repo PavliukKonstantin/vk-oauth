@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block title %}<title>vk_oauth</title>{% endblock %}
+</head>
+
+<body>
+
+    {% if user.is_authenticated %}
+
+    <p>Авторизованный пользователь.</p>
+    <p>
+        <a href="https://vk.com/id{{ account_info.id}}">{{ account_info.first_name }} {{ account_info.last_name }}</a>
+    </p>
+    <a href="https://vk.com/id{{ account_info.id}}"><img src="{{ account_info.photo_200_orig }}"></a>
+
+    <form method="post" action="{% url 'app_logout'%}">
+        {% csrf_token %}
+        <button>Выйти</button>
+    </form>
+
+    <br>
+    <br>
+
+
+    <p>5 друзей авторизованного пользователя, выбранных случайным образом</p>
+    <ol>
+        {% for vk_friend in vk_friends %}
+        <li>
+            <p><a href="https://vk.com/id{{ vk_friend.id }}">{{ vk_friend.first_name }} {{ vk_friend.last_name }}</a>
+            </p>
+            <a href="https://vk.com/id{{ vk_friend.id }}"><img src="{{ vk_friend.photo_200_orig }}"></a>
+            <br>
+            <br>
+        </li>
+        {% endfor %}
+    </ol>
+
+    {% else %}
+
+    <p>5 случайных друзей отображаются только для авторизованных пользователей</p>
+
+    <form method="post" action="{% url 'social:begin' 'vk-oauth2' %}">
+        {% csrf_token %}
+        <button>Авторизоваться</button>
+    </form>
+
+    {% endif %}
+</body>
+
+</html>

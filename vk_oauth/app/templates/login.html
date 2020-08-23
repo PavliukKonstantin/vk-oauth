@@ -1,7 +1,7 @@
-<p>Чтобы увидеть 5 случайных друзей, войдите через Вконтакте</p>
+<p>Чтобы увидеть 5 своих друзей, выбранных случайным образом, войдите через Вконтакте</p>
 <p>Для этого нужно нажать на кнопку авторизоваться</p>
 
-<form method="post" action='{% url "social:begin" "vk-oauth2" %}'>
+<form method="post" action="{% url 'social:begin' 'vk-oauth2' %}">
   {% csrf_token %}
-  <button>Aвторизоваться</button>
+  <button>Авторизоваться</button>
 </form>
