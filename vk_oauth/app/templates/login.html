@@ -1,7 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+
 <p>Чтобы увидеть 5 своих друзей, выбранных случайным образом, войдите через Вконтакте</p>
 <p>Для этого нужно нажать на кнопку авторизоваться</p>
+<p><a href="{% url 'social:begin' 'vk-oauth2' %}" class='button'>Авторизоваться</a></p>
 
-<form method="post" action="{% url 'social:begin' 'vk-oauth2' %}">
-  {% csrf_token %}
-  <button>Авторизоваться</button>
-</form>
+{% endblock %}
