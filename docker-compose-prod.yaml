@@ -1,6 +1,13 @@
 version: "3.8"
 
 services:
+    db:
+        image: postgres:12.3-alpine
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - .env.prod
+
     web:
         build:
             context: ./vk_oauth
@@ -13,16 +20,11 @@ services:
         depends_on:
             - db
 
-    db:
-        image: postgres:12.3-alpine
-        volumes:
-            - postgres_data:/var/lib/postgresql/data/
-        env_file:
-            - .env.prod
-
     nginx-proxy:
         container_name: nginx-proxy
-        build: ./nginx/nginx_prod/
+        build:
+            context: ./nginx/nginx_prod/
+            dockerfile: Dockerfile
         restart: always
         ports:
             - 443:443
