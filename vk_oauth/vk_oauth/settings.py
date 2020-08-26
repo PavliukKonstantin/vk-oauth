@@ -112,6 +112,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
 
+
 LOGIN_URL = "/app/login/"
 
 LOGIN_REDIRECT_URL = "/app/vk-friends/"
@@ -122,18 +123,15 @@ SOCIAL_AUTH_URL_NAMESPACE = "social"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# For social-auth-app-django with postgre
-SOCIAL_AUTH_POSTGRES_JSONFIELD = int(
-    os.environ.get("SOCIAL_AUTH_POSTGRES_JSONFIELD", default=0),
-)
-
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = [
     "friends",
 ]
 
 SOCIAL_AUTH_VK_OAUTH2_KEY = os.environ.get(
     "SOCIAL_AUTH_VK_OAUTH2_KEY",
+    default=None,
 )
 SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get(
     "SOCIAL_AUTH_VK_OAUTH2_SECRET",
+    default=None,
 )
