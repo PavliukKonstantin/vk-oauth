@@ -17,12 +17,12 @@ def vk_friends(request):
         access_token = user_social_auth.access_token
 
         api = api_vk.get_vk_api(access_token)
-        vk_friends = api_vk.get_vk_friends(api)
+        friends_info = api_vk.get_vk_friends(api)
         account_info = api_vk.get_account_info(api)
 
         context.update({
             "account_info": account_info,
-            "vk_friends": vk_friends,
+            "friends_info": friends_info,
         })
 
     return render(request, "vk_friends.html", context)

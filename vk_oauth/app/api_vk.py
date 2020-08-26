@@ -42,9 +42,9 @@ def get_vk_friends(api: vk_api.VkApi) -> dict:
     Returns:
         dict: information about 5 random friends.
     """
-    five_friends = api.friends.get(
+    friends_info = api.friends.get(
         order="random",
         count=5,
         fields=["photo_200_orig"],
     )
-    return five_friends.get("items")
+    return friends_info.get("items")
